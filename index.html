@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinWise AI – Intelligent Financial Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="shell">
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">💎</div>
+      <div>
+        <div class="brand-name">Fin<em>Wise</em> AI</div>
+        <div class="brand-tag">Intelligent Financial Advisory Platform</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="ai-pill"><span class="ai-pill-dot"></span> Antigravity AI Active</div>
+      <div class="score-chip">Powered by <strong>Antigravity AI</strong></div>
+      <button class="db-btn-icon" onclick="openSettingsModal()" style="font-size:16px;color:var(--text);display:flex;align-items:center;" title="API Settings">⚙️</button>
+    </div>
+  </header>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav">
+    <button class="nav-item active" onclick="switchTab('loan')" id="mtab-loan"><span class="nav-icon">🏦</span>Loan</button>
+    <button class="nav-item" onclick="switchTab('credit')" id="mtab-credit"><span class="nav-icon">📊</span>Credit</button>
+    <button class="nav-item" onclick="switchTab('emi')" id="mtab-emi"><span class="nav-icon">🧮</span>EMI</button>
+    <button class="nav-item" onclick="switchTab('tips')" id="mtab-tips"><span class="nav-icon">💡</span>Tips</button>
+    <button class="nav-item" onclick="switchTab('db')" id="mtab-db"><span class="nav-icon">🗄️</span>DB</button>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Tools</div>
+    <button class="nav-item active" onclick="switchTab('loan')" id="tab-loan"><span class="nav-icon">🏦</span>Loan Eligibility<span class="nav-badge">AI</span></button>
+    <button class="nav-item" onclick="switchTab('credit')" id="tab-credit"><span class="nav-icon">📊</span>Credit Analyzer<span class="nav-badge">AI</span></button>
+    <button class="nav-item" onclick="switchTab('emi')" id="tab-emi"><span class="nav-icon">🧮</span>EMI Calculator</button>
+    <button class="nav-item" onclick="switchTab('tips')" id="tab-tips"><span class="nav-icon">💡</span>AI Financial Tips</button>
+    <button class="nav-item" onclick="switchTab('db')" id="tab-db"><span class="nav-icon">🗄️</span>Database & Insights<span class="nav-badge">DB</span></button>
+
+    <div class="sidebar-label" style="margin-top:20px">Info</div>
+    <div style="padding:0 12px">
+      <p style="font-size:12px;color:var(--muted);line-height:1.65">
+        Analyses powered by <strong style="color:var(--teal)">Antigravity AI</strong>. Financial data stays in your browser.
+      </p>
+    </div>
+
+    <div class="sidebar-footer" style="margin-top:auto">
+      <strong>⚡ Pro Tip</strong>
+      <p style="margin-top:6px">Keep FOIR below 40% and CIBIL above 750 for the best loan terms.</p>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ═══════════ LOAN PANEL ═══════════ -->
+    <div class="panel active" id="panel-loan">
+      <div class="page-hero">
+        <div class="hero-eyebrow">🏦 Tool 01 · AI-Powered</div>
+        <div class="hero-title">Loan <span>Eligibility</span> Checker</div>
+        <div class="hero-sub">Instant credit assessment with AI risk profiling, FOIR analysis, and personalised approval guidance.</div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-title">👤 Personal & Employment Details</div>
+        <div class="fgrid">
+          <div class="fg">
+            <label class="flabel">Full Name</label>
+            <input class="finput" id="ln-name" placeholder="e.g. Arjun Sharma">
+          </div>
+          <div class="fg">
+            <label class="flabel">Age</label>
+            <input class="finput" id="ln-age" type="number" min="21" max="65" placeholder="28">
+          </div>
+          <div class="fg">
+            <label class="flabel">Employment Type</label>
+            <select class="finput" id="ln-emp">
+              <option value="Salaried">Salaried</option>
+              <option value="Self-Employed">Self-Employed</option>
+              <option value="Business Owner">Business Owner</option>
+              <option value="Freelancer">Freelancer</option>
+            </select>
+          </div>
+        </div>
+        <div class="fcard-title">💰 Financial Profile</div>
+        <div class="fgrid">
+          <div class="fg">
+            <label class="flabel">Monthly Income (₹)</label>
+            <input class="finput" id="ln-income" type="number" placeholder="50000">
+          </div>
+          <div class="fg">
+            <label class="flabel">Credit Score (CIBIL)</label>
+            <input class="finput" id="ln-score" type="number" min="300" max="900" placeholder="730">
+          </div>
+          <div class="fg">
+            <label class="flabel">Existing EMI / Month (₹)</label>
+            <input class="finput" id="ln-existemi" type="number" placeholder="0">
+          </div>
+        </div>
+        <div class="fcard-title">🎯 Loan Details</div>
+        <div class="fgrid">
+          <div class="fg">
+            <label class="flabel">Loan Amount (₹)</label>
+            <input class="finput" id="ln-amount" type="number" placeholder="600000">
+          </div>
+          <div class="fg">
+            <label class="flabel">Tenure (months)</label>
+            <div class="range-wrap">
+              <div class="range-row">
+                <input class="frange" id="ln-tenure" type="range" min="6" max="360" value="60" oninput="document.getElementById('ln-tenure-val').textContent=this.value+' mo'">
+                <span class="range-val" id="ln-tenure-val">60 mo</span>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flabel">Loan Purpose</label>
+            <select class="finput" id="ln-purpose">
+              <option value="Home Loan">Home Loan</option>
+              <option value="Personal Loan">Personal Loan</option>
+              <option value="Car Loan">Car Loan</option>
+              <option value="Education Loan">Education Loan</option>
+              <option value="Business Loan">Business Loan</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label class="flabel">Interest Rate (% p.a.)</label>
+            <input class="finput" id="ln-rate" type="number" step="0.1" value="10.5" placeholder="10.5">
+          </div>
+        </div>
+        <div class="row-btns">
+          <button class="btn btn-glow" id="loan-btn" onclick="checkLoan()">
+            <span>Check Eligibility</span>
+          </button>
+          <button class="btn btn-ghost" onclick="clearForm('loan')">Clear</button>
+        </div>
+      </div>
+
+      <div id="loan-result"></div>
+    </div>
+
+    <!-- ═══════════ CREDIT PANEL ═══════════ -->
+    <div class="panel" id="panel-credit">
+      <div class="page-hero" style="background:linear-gradient(135deg,rgba(139,127,245,0.08),rgba(0,e5,b4,0.03),transparent)">
+        <div class="hero-eyebrow" style="color:var(--violet)">📊 Tool 02 · CIBIL Analysis</div>
+        <div class="hero-title">Credit Score <span>Analyzer</span></div>
+        <div class="hero-sub">Deep-dive into your credit health with factor-by-factor breakdown and Antigravity AI improvement roadmap.</div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-title">📈 Credit Profile</div>
+        <div class="fgrid">
+          <div class="fg">
+            <label class="flabel">Current CIBIL Score</label>
+            <input class="finput" id="cs-score" type="number" min="300" max="900" placeholder="680">
+          </div>
+          <div class="fg">
+            <label class="flabel">Active Loans / Credit Cards</label>
+            <input class="finput" id="cs-loans" type="number" min="0" placeholder="2">
+          </div>
+          <div class="fg">
+            <label class="flabel">Credit Utilisation (%)</label>
+            <div class="range-wrap">
+              <div class="range-row">
+                <input class="frange" id="cs-util" type="range" min="0" max="100" value="30" oninput="document.getElementById('cs-util-val').textContent=this.value+'%'">
+                <span class="range-val" id="cs-util-val">30%</span>
+              </div>
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flabel">Missed Payments (12 mo)</label>
+            <input class="finput" id="cs-missed" type="number" min="0" placeholder="0">
+          </div>
+          <div class="fg">
+            <label class="flabel">Credit History Age (years)</label>
+            <input class="finput" id="cs-age" type="number" min="0" placeholder="3">
+          </div>
+          <div class="fg">
+            <label class="flabel">Hard Enquiries (6 mo)</label>
+            <input class="finput" id="cs-enq" type="number" min="0" placeholder="1">
+          </div>
+          <div class="fg">
+            <label class="flabel">Monthly Income (₹) — optional</label>
+            <input class="finput" id="cs-income" type="number" placeholder="45000">
+          </div>
+        </div>
+        <button class="btn btn-violet" id="credit-btn" onclick="analyzeCredit()">
+          <span>Analyse My Score</span>
+        </button>
+      </div>
+
+      <div id="credit-result"></div>
+    </div>
+
+    <!-- ═══════════ EMI PANEL ═══════════ -->
+    <div class="panel" id="panel-emi">
+      <div class="page-hero" style="background:linear-gradient(135deg,rgba(246,162,55,0.06),rgba(0,229,180,0.03),transparent)">
+        <div class="hero-eyebrow" style="color:var(--amber)">🧮 Tool 03 · Live Calculator</div>
+        <div class="hero-title">EMI <span>Calculator</span></div>
+        <div class="hero-sub">Live amortisation breakdown with total interest visualisation and AI-powered prepayment strategies.</div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-title">📐 Loan Parameters</div>
+        <div class="fgrid">
+          <div class="fg">
+            <label class="flabel">Principal Amount (₹)</label>
+            <input class="finput" id="ep" type="number" placeholder="500000" oninput="liveEMI()">
+          </div>
+          <div class="fg">
+            <label class="flabel">Interest Rate (% p.a.)</label>
+            <div class="range-wrap">
+              <div class="range-row">
+                <input class="frange" id="er-range" type="range" min="1" max="36" step="0.1" value="10.5"
+                  oninput="document.getElementById('er').value=this.value;liveEMI()">
+                <span class="range-val" id="er-range-val">10.5%</span>
+              </div>
+              <input class="finput" id="er" type="number" step="0.1" value="10.5" style="margin-top:6px"
+                oninput="document.getElementById('er-range').value=this.value;document.getElementById('er-range-val').textContent=this.value+'%';liveEMI()">
+            </div>
+          </div>
+          <div class="fg">
+            <label class="flabel">Tenure (months)</label>
+            <div class="range-wrap">
+              <div class="range-row">
+                <input class="frange" id="et-range" type="range" min="6" max="360" value="60"
+                  oninput="document.getElementById('et').value=this.value;document.getElementById('et-range-val').textContent=this.value+' mo';liveEMI()">
+                <span class="range-val" id="et-range-val">60 mo</span>
+              </div>
+              <input class="finput" id="et" type="number" value="60" style="margin-top:6px"
+                oninput="document.getElementById('et-range').value=this.value;document.getElementById('et-range-val').textContent=this.value+' mo';liveEMI()">
+            </div>
+          </div>
+        </div>
+
+        <div id="emi-live"></div>
+
+        <hr>
+        <button class="btn btn-glow" id="emi-ai-btn" onclick="getEMITips()">
+          <span>Get AI Prepayment Strategy</span>
+        </button>
+      </div>
+
+      <div id="emi-ai-out"></div>
+    </div>
+
+    <!-- ═══════════ TIPS PANEL ═══════════ -->
+    <div class="panel" id="panel-tips">
+      <div class="page-hero" style="background:linear-gradient(135deg,rgba(0,229,180,0.06),rgba(139,127,245,0.05),transparent)">
+        <div class="hero-eyebrow">💡 Tool 04 · AI Chat</div>
+        <div class="hero-title">AI <span>Financial</span> Advisor</div>
+        <div class="hero-sub">Chat with Antigravity about anything — savings, investments, tax, insurance, debt — tailored to Indian markets.</div>
+      </div>
+
+      <div class="quick-chips">
+        <div class="chip" onclick="askChip(this)">How to build ₹1 Cr corpus?</div>
+        <div class="chip" onclick="askChip(this)">Best tax-saving investments 2025</div>
+        <div class="chip" onclick="askChip(this)">Should I prepay my home loan?</div>
+        <div class="chip" onclick="askChip(this)">SIP vs lump sum investing</div>
+        <div class="chip" onclick="askChip(this)">How to improve CIBIL fast?</div>
+        <div class="chip" onclick="askChip(this)">Term insurance vs ULIP</div>
+      </div>
+
+      <div class="tips-chat">
+        <div class="tips-messages" id="tips-msgs">
+          <div class="msg msg-ai">
+            <div class="msg-ai-head">🤖 FinWise AI</div>
+            Hello! I'm your AI financial advisor powered by Antigravity. Ask me anything about personal finance in India — loans, investments, tax planning, insurance, or savings strategies. What's on your mind?
+          </div>
+        </div>
+        <div class="tips-input-row">
+          <textarea class="tips-input" id="tips-q" rows="2" placeholder="Ask anything about personal finance…" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();askTips()}"></textarea>
+          <button class="btn btn-glow" id="tips-btn" onclick="askTips()" style="padding:11px 18px">
+            <span>Send ↑</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════ DATABASE PANEL ═══════════ -->
+    <div class="panel" id="panel-db">
+      <div class="page-hero" style="background:linear-gradient(135deg,rgba(139,127,245,0.08),rgba(0,229,180,0.03),transparent)">
+        <div class="hero-eyebrow" style="color:var(--violet)">🗄️ Tool 05 · Database Center</div>
+        <div class="hero-title">Database <span>& Insights</span></div>
+        <div class="hero-sub">Locally saved calculator checks, credit histories, and chat logs. Everything stays completely in your browser.</div>
+      </div>
+
+      <div class="db-grid">
+        <!-- LEFT: history list -->
+        <div>
+          <div class="fcard" style="padding: 24px;">
+            <div class="fcard-title">📈 CIBIL Score History Trend</div>
+            <div class="trend-chart-container">
+              <div class="trend-chart-header">
+                <span class="trend-chart-title">Historical credit score changes (min 2 records required)</span>
+              </div>
+              <div class="trend-chart-canvas-wrap" id="credit-trend-svg">
+                <!-- SVG injected dynamically -->
+              </div>
+            </div>
+
+            <div class="fcard-title" style="margin-top: 24px;">🗄️ Calculation Records & Logs</div>
+            <div class="db-table-wrap">
+              <table class="db-table">
+                <thead>
+                  <tr>
+                    <th>Date & Time</th>
+                    <th>Type</th>
+                    <th>Summary Details</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="db-history-rows">
+                  <!-- Records injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: database actions & summary stats -->
+        <div>
+          <div class="db-actions-card">
+            <div class="fcard-title" style="margin-bottom: 15px;">📊 Quick Statistics</div>
+            <div class="emi-hero" style="grid-template-columns: 1fr; gap: 10px; margin: 0 0 20px 0;">
+              <div class="emi-box" style="padding: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left;">
+                <span class="emi-lbl" style="font-size: 12px;">Total Loan Checks</span>
+                <span class="emi-val" id="db-stat-loans" style="font-size: 18px; margin: 0;">0</span>
+              </div>
+              <div class="emi-box" style="padding: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left;">
+                <span class="emi-lbl" style="font-size: 12px;">Total Credit Analyses</span>
+                <span class="emi-val" id="db-stat-credit" style="font-size: 18px; margin: 0;">0</span>
+              </div>
+              <div class="emi-box" style="padding: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left;">
+                <span class="emi-lbl" style="font-size: 12px;">Total EMI Calculations</span>
+                <span class="emi-val" id="db-stat-emi" style="font-size: 18px; margin: 0;">0</span>
+              </div>
+              <div class="emi-box" style="padding: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left;">
+                <span class="emi-lbl" style="font-size: 12px;">Average CIBIL Logged</span>
+                <span class="emi-val" id="db-stat-avgscore" style="font-size: 18px; margin: 0;">N/A</span>
+              </div>
+              <div class="emi-box" style="padding: 12px; display: flex; justify-content: space-between; align-items: center; text-align: left;">
+                <span class="emi-lbl" style="font-size: 12px;">Total Requested Capital</span>
+                <span class="emi-val" id="db-stat-totalamt" style="font-size: 18px; margin: 0; color: var(--violet);">₹0</span>
+              </div>
+            </div>
+
+            <div class="fcard-title" style="margin-bottom: 15px; margin-top: 15px;">⚙️ DB Management</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <button class="btn btn-glow" style="width: 100%; justify-content: center;" onclick="exportDatabaseJSON()">
+                <span>📤 Export Database (JSON)</span>
+              </button>
+              
+              <label class="btn btn-ghost" style="width: 100%; justify-content: center; text-align: center; display: inline-flex; cursor: pointer;">
+                <span>📥 Import Database Backup</span>
+                <input type="file" id="db-import-file" style="display: none;" accept=".json" onchange="importDatabaseJSON(event)">
+              </label>
+              
+              <button class="btn btn-ghost btn-danger" style="width: 100%; justify-content: center;" onclick="clearFullDatabase()">
+                <span>🗑️ Wipe Database Data</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══════════ SETTINGS MODAL ═══════════ -->
+<div id="settings-modal" style="display:none;position:fixed;inset:0;background:rgba(5,6,10,0.85);backdrop-filter:blur(10px);z-index:9999;align-items:center;justify-content:center;">
+  <div class="fcard" style="width:100%;max-width:450px;margin:20px;padding:30px;position:relative;">
+    <button onclick="closeSettingsModal()" style="position:absolute;right:20px;top:20px;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;">&times;</button>
+    <div class="fcard-title" style="margin-bottom:15px;">⚙️ AI Connection Settings</div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.6;">
+      Configure your API credentials to connect to live models. By default, the application runs on **local high-fidelity simulations** if no API key is set.
+    </p>
+    <div class="fg" style="margin-bottom:15px;">
+      <label class="flabel">Anthropic API Key</label>
+      <input class="finput" id="setting-api-key" type="password" placeholder="sk-ant-...">
+    </div>
+    <div class="fg" style="margin-bottom:25px;">
+      <label class="flabel">API Endpoint Proxy / Gateway URL</label>
+      <input class="finput" id="setting-api-proxy" value="https://api.anthropic.com/v1/messages">
+      <span style="font-size:9.5px;color:var(--muted);margin-top:4px;">
+        Note: Browsers block direct calls to Anthropic due to CORS. Use a proxy gateway if calling directly from browser.
+      </span>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeSettingsModal()">Cancel</button>
+      <button class="btn btn-glow" onclick="saveSettings()">Save Configuration</button>
+    </div>
+  </div>
+</div>
+<script src="javascript.js"></script>
+</body>
+</html>
